@@ -60,22 +60,28 @@
             margin: 0;
             padding: 0;
             width: 100%;
+            max-width: 1000px;
         }
         
         nav li {
             margin: 5px;
             padding: 0;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
         }
         
         nav a {
             color: white;
             text-decoration: none;
-            padding: 0.8rem 1.2rem;
+            padding: 0.8rem 1rem;
             display: block;
             transition: all 0.3s;
-            border-radius: 25px; /* Botones redondeados */
+            border-radius: 8px; /* Bordes más sutiles */
             background-color: rgba(255,255,255,0.1);
             text-align: center;
+            width: 100%;
+            box-sizing: border-box;
         }
         
         nav a:hover {
@@ -122,7 +128,7 @@
         .calculator {
             background-color: #f5f5f5;
             padding: 1.2rem;
-            border-radius: 12px;
+            border-radius: 8px;
             margin: 1.5rem 0;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
@@ -136,7 +142,7 @@
             padding: 0.8rem;
             margin: 0.5rem 0;
             border: 1px solid #ddd;
-            border-radius: 8px;
+            border-radius: 6px;
             box-sizing: border-box;
             transition: all 0.3s;
             box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
@@ -153,7 +159,7 @@
             color: white;
             border: none;
             padding: 0.8rem 1.5rem;
-            border-radius: 25px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
             margin-top: 1rem;
@@ -174,7 +180,7 @@
             padding: 0.5rem;
             border: 1px solid #eee;
             background-color: white;
-            border-radius: 8px;
+            border-radius: 6px;
         }
         
         .canvas-container {
@@ -186,7 +192,7 @@
         
         canvas {
             border: 1px solid #ddd;
-            border-radius: 8px;
+            border-radius: 6px;
             background-color: white;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
@@ -208,7 +214,8 @@
             }
             
             nav li {
-                width: calc(50% - 10px); /* Dos botones por fila en móviles */
+                min-width: 120px; /* Ancho mínimo reducido para móviles */
+                flex: 0 0 calc(50% - 10px); /* Dos botones por fila en móviles */
             }
             
             header h1 {
@@ -234,7 +241,7 @@
             button {
                 width: 100%;
                 padding: 12px;
-                border-radius: 25px;
+                border-radius: 8px;
                 font-weight: bold;
             }
 
@@ -246,7 +253,8 @@
         /* Ajustes para tablets */
         @media (min-width: 769px) and (max-width: 1024px) {
             nav li {
-                margin: 5px 8px;
+                margin: 5px;
+                min-width: 130px;
             }
             
             .two-columns {
@@ -278,7 +286,7 @@
             cursor: pointer;
             border: 1px solid #ddd;
             border-bottom: none;
-            border-radius: 8px 8px 0 0;
+            border-radius: 6px 6px 0 0;
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
             transition: all 0.3s;
@@ -296,7 +304,7 @@
             display: none;
             padding: 1.5rem;
             border: 1px solid #ddd;
-            border-radius: 0 8px 8px 8px;
+            border-radius: 0 6px 6px 6px;
             background-color: white;
         }
         
@@ -307,7 +315,7 @@
         .animate-btn {
             background-color: var(--secondary-color);
             margin-right: 1rem;
-            border-radius: 25px;
+            border-radius: 8px;
         }
 
         footer a {
@@ -319,6 +327,38 @@
         footer a:hover {
             color: var(--primary-color);
         }
+        /* Estilos responsive para el footer */
+footer {
+    background-color: var(--dark-color);
+    color: white;
+    text-align: center;
+    padding: 1.5rem 0;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+footer p {
+    margin: 0.5rem auto;
+    max-width: 90%;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    footer {
+        padding: 1.2rem 0;
+    }
+    
+    footer p {
+        font-size: 0.9rem;
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    footer p {
+        font-size: 0.8rem;
+    }
+}
     </style>
 </head>
 <body>
@@ -545,10 +585,9 @@
             </div>
         </section>
     </main>
-    
     <footer>
-        <p>Física Interactiva © 2024 | Desarrollado con ❤️ para estudiantes de física</p>
-        <p><a href="https://github.com/tuusuario/fisica-interactiva">Código fuente en GitHub</a></p>
+        <p>Física Interactiva © 2025 | Profesor Javier Pereyra</p>
+        <p>Hecho con ❤️ para los estudiantes de 4to año de Introducción a la Física</p>
     </footer>
     
     <script>
