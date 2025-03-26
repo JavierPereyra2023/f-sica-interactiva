@@ -5,145 +5,384 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Física Interactiva: Movimiento</title>
     <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+            background-color: var(--light-color);
         }
+        
         header {
-            background-color: #2c3e50;
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
             color: white;
             text-align: center;
-            padding: 2rem;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
+        
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        header p {
+            margin: 0.5rem 0 0;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
         nav {
-            background-color: #34495e;
-            padding: 1rem;
-        }
-        nav ul {
-            list-style-type: none;
-            padding: 0;
+            background-color: var(--dark-color);
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 0 10px;
         }
+        
+        nav ul {
+            display: flex;
+            flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+            justify-content: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            max-width: 1000px;
+        }
+        
+        nav li {
+            margin: 5px;
+            padding: 0;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        
         nav a {
             color: white;
             text-decoration: none;
+            padding: 0.8rem 1rem;
+            display: block;
+            transition: all 0.3s;
+            border-radius: 8px; /* Bordes más sutiles */
+            background-color: rgba(255,255,255,0.1);
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
         }
+        
         nav a:hover {
-            text-decoration: underline;
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
+        
         main {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
+        
         section {
             margin-bottom: 3rem;
             background-color: white;
-            padding: 2rem;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
         }
+        
         h2 {
-            color: #2c3e50;
+            color: var(--dark-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
         }
+        
+        h3 {
+            color: var(--primary-color);
+        }
+        
         .formula {
-            background-color: #ecf0f1;
+            background-color: #f9f9f9;
             padding: 1rem;
-            border-radius: 5px;
+            border-left: 4px solid var(--primary-color);
             margin: 1rem 0;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
+            border-radius: 0 8px 8px 0;
         }
-        .canvas-container {
-            text-align: center;
-            margin: 1rem 0;
-        }
-        canvas {
-            border: 1px solid #ddd;
-        }
-        .animate-btn {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .animate-btn:hover {
-            background-color: #2980b9;
-        }
+        
         .calculator {
-            margin-top: 1rem;
+            background-color: #f5f5f5;
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
-        .calculator div {
+        
+        .calculator h3 {
+            margin-top: 0;
+        }
+        
+        input[type="number"], select {
+            width: 100%;
+            padding: 0.8rem;
             margin: 0.5rem 0;
-        }
-        label {
-            display: inline-block;
-            width: 150px;
-        }
-        input, select {
-            padding: 0.3rem;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 6px;
+            box-sizing: border-box;
+            transition: all 0.3s;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
         }
+        
+        input[type="number"]:focus, select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
+            outline: none;
+        }
+        
         button {
-            background-color: #2ecc71;
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
             cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+            font-weight: 500;
         }
+        
         button:hover {
-            background-color: #27ae60;
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
+        
         .result {
             margin-top: 1rem;
             font-weight: bold;
-            color: #e74c3c;
+            color: var(--primary-color);
+            min-height: 2.5rem;
+            padding: 0.5rem;
+            border: 1px solid #eee;
+            background-color: white;
+            border-radius: 6px;
         }
+        
+        .canvas-container {
+            margin: 2rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        canvas {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                flex-direction: row; /* Mantiene horizontal pero permite envolver */
+            }
+            
+            nav li {
+                min-width: 120px; /* Ancho mínimo reducido para móviles */
+                flex: 0 0 calc(50% - 10px); /* Dos botones por fila en móviles */
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            header p {
+                font-size: 1rem;
+            }
+            
+            section {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            /* Ajustar tamaño de canvas en móviles */
+            canvas {
+                width: 100%;
+                height: auto;
+            }
+
+            /* Mejorar botones en móviles */
+            button {
+                width: 100%;
+                padding: 12px;
+                border-radius: 8px;
+                font-weight: bold;
+            }
+
+            main {
+                padding: 1rem;
+            }
+        }
+        
+        /* Ajustes para tablets */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            nav li {
+                margin: 5px;
+                min-width: 130px;
+            }
+            
+            .two-columns {
+                gap: 1.5rem;
+            }
+            
+            section {
+                padding: 1.8rem;
+            }
+        }
+        
         .tabs {
             display: flex;
-            gap: 1rem;
             margin-bottom: 1rem;
+            flex-wrap: wrap;
         }
+        
         .tab {
-            padding: 0.5rem 1rem;
-            background-color: #ddd;
+            padding: 0.8rem 1.2rem;
+            background-color: #f0f0f0;
             cursor: pointer;
-            border-radius: 5px 5px 0 0;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 6px 6px 0 0;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
         }
+        
         .tab.active {
-            background-color: #3498db;
-            color: white;
+            background-color: white;
+            font-weight: bold;
+            color: var(--primary-color);
+            border-bottom: 2px solid white;
+            margin-bottom: -1px;
         }
+        
         .tab-content {
             display: none;
+            padding: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 0 6px 6px 6px;
+            background-color: white;
         }
+        
         .tab-content.active {
             display: block;
         }
-        .two-columns {
-            display: flex;
-            gap: 2rem;
-            justify-content: space-between;
+
+        .animate-btn {
+            background-color: var(--secondary-color);
+            margin-right: 1rem;
+            border-radius: 8px;
         }
+
+        footer a {
+            color: white;
+            text-decoration: underline;
+            transition: all 0.3s;
+        }
+
+        footer a:hover {
+            color: var(--primary-color);
+        }
+        
+        /* Estilos responsive para el footer */
         footer {
-            background-color: #2c3e50;
+            background-color: var(--dark-color);
             color: white;
             text-align: center;
-            padding: 1rem;
-            position: fixed;
-            bottom: 0;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
             width: 100%;
         }
-        footer a {
-            color: #3498db;
-            text-decoration: none;
+
+        footer p {
+            margin: 0.5rem auto;
+            max-width: 90%;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            footer {
+                padding: 1.2rem 0;
+            }
+            
+            footer p {
+                font-size: 0.9rem;
+                max-width: 95%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            footer p {
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Mejora para botones uniformes en móvil */
+        @media (max-width: 768px) {
+            nav ul {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+                padding: 10px;
+            }
+            
+            nav li {
+                margin: 0;
+                min-width: 0;
+                width: 100%;
+                flex: none;
+            }
+            
+            nav a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 60px;
+                width: 100%;
+                padding: 0 10px;
+                line-height: 1.2;
+                text-align: center;
+                white-space: normal;
+                word-wrap: break-word;
+                box-sizing: border-box;
+                font-size: 0.95rem;
+            }
         }
     </style>
 </head>
@@ -165,7 +404,9 @@
     <main>
         <section id="desplazamiento">
             <h2>Desplazamiento</h2>
+            
             <p>El <strong>desplazamiento</strong> es un vector que describe el cambio en la posición de un objeto. Es la distancia en línea recta desde el punto inicial hasta el punto final, junto con la dirección.</p>
+            
             <div class="formula">
                 <p>Δx = x<sub>f</sub> - x<sub>i</sub></p>
                 <p>Donde:</p>
@@ -175,18 +416,22 @@
                     <li>x<sub>i</sub> = Posición inicial</li>
                 </ul>
             </div>
+            
             <div class="canvas-container">
                 <canvas id="desplazamientoCanvas" width="600" height="200"></canvas>
             </div>
             <div style="text-align: center; margin-bottom: 1rem;">
                 <button id="animarDesplazamiento" class="animate-btn">Animar desplazamiento</button>
             </div>
+            
             <div class="calculator">
                 <h3>Calculadora de Desplazamiento</h3>
+                
                 <div class="tabs">
                     <div class="tab active" onclick="activateTab('desplazamiento1D', this)">1 Dimensión</div>
                     <div class="tab" onclick="activateTab('desplazamiento2D', this)">2 Dimensiones</div>
                 </div>
+                
                 <div id="desplazamiento1D" class="tab-content active">
                     <div>
                         <label for="posicionInicial">Posición inicial (m):</label>
@@ -199,6 +444,7 @@
                     <button onclick="calcularDesplazamiento1D()">Calcular</button>
                     <div id="resultado1D" class="result"></div>
                 </div>
+                
                 <div id="desplazamiento2D" class="tab-content">
                     <div>
                         <label for="posicionInicialX">Posición inicial X (m):</label>
@@ -224,7 +470,9 @@
         
         <section id="velocidad">
             <h2>Velocidad Media</h2>
+            
             <p>La <strong>velocidad media</strong> es la relación entre el desplazamiento total y el tiempo total transcurrido. Es un vector que indica qué tan rápido y en qué dirección se ha movido un objeto desde su posición inicial hasta su posición final.</p>
+            
             <div class="formula">
                 <p>v<sub>media</sub> = Δx / Δt</p>
                 <p>Donde:</p>
@@ -234,12 +482,14 @@
                     <li>Δt = Intervalo de tiempo</li>
                 </ul>
             </div>
+            
             <div class="canvas-container">
                 <canvas id="velocidadCanvas" width="600" height="200"></canvas>
             </div>
             <div style="text-align: center; margin-bottom: 1rem;">
                 <button id="animarVelocidad" class="animate-btn">Animar movimiento con velocidad constante</button>
             </div>
+            
             <div class="calculator">
                 <h3>Calculadora de Velocidad Media</h3>
                 <div>
@@ -250,14 +500,16 @@
                     <label for="tiempo">Tiempo (s):</label>
                     <input type="number" id="tiempo" placeholder="Ej: 20">
                 </div>
-                <button id="btnCalcularVelocidad">Calcular</button>
+                <button onclick="calcularVelocidad()">Calcular</button>
                 <div id="resultadoVelocidad" class="result"></div>
             </div>
         </section>
         
         <section id="aceleracion">
             <h2>Aceleración Media</h2>
+            
             <p>La <strong>aceleración media</strong> es la relación entre el cambio en la velocidad y el tiempo transcurrido. Describe qué tan rápido cambia la velocidad de un objeto, ya sea en magnitud o dirección.</p>
+            
             <div class="formula">
                 <p>a<sub>media</sub> = Δv / Δt</p>
                 <p>Donde:</p>
@@ -267,12 +519,14 @@
                     <li>Δt = Intervalo de tiempo</li>
                 </ul>
             </div>
+            
             <div class="canvas-container">
                 <canvas id="aceleracionCanvas" width="600" height="200"></canvas>
             </div>
             <div style="text-align: center; margin-bottom: 1rem;">
                 <button id="animarAceleracion" class="animate-btn">Animar movimiento acelerado</button>
             </div>
+            
             <div class="calculator">
                 <h3>Calculadora de Aceleración Media</h3>
                 <div>
@@ -294,7 +548,9 @@
         
         <section id="unidades">
             <h2>Conversión de Unidades</h2>
+            
             <p>En física, es común necesitar convertir entre diferentes unidades de medida. Aquí puedes convertir entre las unidades más comunes para velocidad y aceleración.</p>
+            
             <div class="two-columns">
                 <div class="calculator">
                     <h3>Conversión de Velocidad</h3>
@@ -323,6 +579,7 @@
                     <button onclick="convertirVelocidad()">Convertir</button>
                     <div id="resultadoConversionVelocidad" class="result"></div>
                 </div>
+                
                 <div class="calculator">
                     <h3>Conversión de Aceleración</h3>
                     <div>
@@ -333,183 +590,4 @@
                         <label for="aceleracionDesde">Desde:</label>
                         <select id="aceleracionDesde">
                             <option value="m/s²">m/s²</option>
-                            <option value="km/h²">km/h²</option>
-                            <option value="ft/s²">ft/s²</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="aceleracionHacia">Hacia:</label>
-                        <select id="aceleracionHacia">
-                            <option value="m/s²">m/s²</option>
-                            <option value="km/h²">km/h²</option>
-                            <option value="ft/s²">ft/s²</option>
-                        </select>
-                    </div>
-                    <button onclick="convertirAceleracion()">Convertir</button>
-                    <div id="resultadoConversionAceleracion" class="result"></div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>© 2023 Física Interactiva. Todos los derechos reservados.</p>
-        <p>Creado por [Tu Nombre] | <a href="https://github.com/tuusuario/tuproyecto" target="_blank">Ver en GitHub</a></p>
-    </footer>
-
-    <script>
-        // Función para activar pestañas
-        function activateTab(tabId, element) {
-            const tabs = document.querySelectorAll('.tab');
-            const contents = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            contents.forEach(content => content.classList.remove('active'));
-            element.classList.add('active');
-            document.getElementById(tabId).classList.add('active');
-        }
-
-        // Calculadora de Desplazamiento 1D
-        function calcularDesplazamiento1D() {
-            const posicionInicial = parseFloat(document.getElementById('posicionInicial').value);
-            const posicionFinal = parseFloat(document.getElementById('posicionFinal').value);
-            const resultadoDiv = document.getElementById('resultado1D');
-            if (isNaN(posicionInicial) || isNaN(posicionFinal)) {
-                resultadoDiv.textContent = 'Por favor, ingresa valores numéricos válidos.';
-                return;
-            }
-            const desplazamiento = posicionFinal - posicionInicial;
-            resultadoDiv.textContent = `Desplazamiento: ${desplazamiento.toFixed(2)} m`;
-        }
-
-        // Calculadora de Desplazamiento 2D
-        function calcularDesplazamiento2D() {
-            const posInicialX = parseFloat(document.getElementById('posicionInicialX').value);
-            const posInicialY = parseFloat(document.getElementById('posicionInicialY').value);
-            const posFinalX = parseFloat(document.getElementById('posicionFinalX').value);
-            const posFinalY = parseFloat(document.getElementById('posicionFinalY').value);
-            const resultadoDiv = document.getElementById('resultado2D');
-            if (isNaN(posInicialX) || isNaN(posInicialY) || isNaN(posFinalX) || isNaN(posFinalY)) {
-                resultadoDiv.textContent = 'Por favor, ingresa valores numéricos válidos.';
-                return;
-            }
-            const desplazamientoX = posFinalX - posInicialX;
-            const desplazamientoY = posFinalY - posInicialY;
-            const magnitud = Math.sqrt(desplazamientoX ** 2 + desplazamientoY ** 2);
-            resultadoDiv.textContent = `Desplazamiento: (${desplazamientoX.toFixed(2)}, ${desplazamientoY.toFixed(2)}) m, Magnitud: ${magnitud.toFixed(2)} m`;
-        }
-
-        // Calculadora de Velocidad Media
-        function calcularVelocidadMedia() {
-            const desplazamiento = parseFloat(document.getElementById('desplazamiento').value);
-            const tiempo = parseFloat(document.getElementById('tiempo').value);
-            const resultadoDiv = document.getElementById('resultadoVelocidad');
-            if (isNaN(desplazamiento) || isNaN(tiempo)) {
-                resultadoDiv.textContent = 'Por favor, ingresa valores numéricos válidos.';
-                return;
-            }
-            if (tiempo === 0) {
-                resultadoDiv.textContent = 'El tiempo no puede ser cero.';
-                return;
-            }
-            const velocidadMedia = desplazamiento / tiempo;
-            resultadoDiv.textContent = `Velocidad media: ${velocidadMedia.toFixed(2)} m/s`;
-        }
-
-        // Calculadora de Aceleración Media
-        function calcularAceleracion() {
-            const velInicial = parseFloat(document.getElementById('velocidadInicial').value);
-            const velFinal = parseFloat(document.getElementById('velocidadFinal').value);
-            const tiempo = parseFloat(document.getElementById('tiempoAceleracion').value);
-            const resultadoDiv = document.getElementById('resultadoAceleracion');
-            if (isNaN(velInicial) || isNaN(velFinal) || isNaN(tiempo)) {
-                resultadoDiv.textContent = 'Por favor, ingresa valores numéricos válidos.';
-                return;
-            }
-            if (tiempo === 0) {
-                resultadoDiv.textContent = 'El tiempo no puede ser cero.';
-                return;
-            }
-            const aceleracion = (velFinal - velInicial) / tiempo;
-            resultadoDiv.textContent = `Aceleración media: ${aceleracion.toFixed(2)} m/s²`;
-        }
-
-        // Conversión de Velocidad
-        function convertirVelocidad() {
-            const valor = parseFloat(document.getElementById('valorVelocidad').value);
-            const desde = document.getElementById('unidadDesde').value;
-            const hacia = document.getElementById('unidadHacia').value;
-            const resultadoDiv = document.getElementById('resultadoConversionVelocidad');
-            if (isNaN(valor)) {
-                resultadoDiv.textContent = 'Por favor, ingresa un valor numérico válido.';
-                return;
-            }
-            let valorEnMs;
-            switch (desde) {
-                case 'km/h': valorEnMs = valor / 3.6; break;
-                case 'm/s': valorEnMs = valor; break;
-                case 'mi/h': valorEnMs = valor / 2.23694; break;
-                case 'ft/s': valorEnMs = valor / 3.28084; break;
-                default: valorEnMs = valor;
-            }
-            let resultado;
-            switch (hacia) {
-                case 'm/s': resultado = valorEnMs; break;
-                case 'km/h': resultado = valorEnMs * 3.6; break;
-                case 'mi/h': resultado = valorEnMs * 2.23694; break;
-                case 'ft/s': resultado = valorEnMs * 3.28084; break;
-                default: resultado = valorEnMs;
-            }
-            resultadoDiv.textContent = `Resultado: ${resultado.toFixed(2)} ${hacia}`;
-        }
-
-        // Conversión de Aceleración
-        function convertirAceleracion() {
-            const valor = parseFloat(document.getElementById('valorAceleracion').value);
-            const desde = document.getElementById('aceleracionDesde').value;
-            const hacia = document.getElementById('aceleracionHacia').value;
-            const resultadoDiv = document.getElementById('resultadoConversionAceleracion');
-            if (isNaN(valor)) {
-                resultadoDiv.textContent = 'Por favor, ingresa un valor numérico válido.';
-                return;
-            }
-            let valorEnMs2;
-            switch (desde) {
-                case 'm/s²': valorEnMs2 = valor; break;
-                case 'km/h²': valorEnMs2 = valor / 12960; break; // 3600² / 1000
-                case 'ft/s²': valorEnMs2 = valor * 0.3048; break;
-                default: valorEnMs2 = valor;
-            }
-            let resultado;
-            switch (hacia) {
-                case 'm/s²': resultado = valorEnMs2; break;
-                case 'km/h²': resultado = valorEnMs2 * 12960; break;
-                case 'ft/s²': resultado = valorEnMs2 / 0.3048; break;
-                default: resultado = valorEnMs2;
-            }
-            resultadoDiv.textContent = `Resultado: ${resultado.toFixed(2)} ${hacia}`;
-        }
-
-        // Funciones de animación (placeholders)
-        function animarDesplazamiento() {
-            // Implementar animación aquí usando el canvas
-            console.log('Animar desplazamiento');
-        }
-        function animarVelocidad() {
-            // Implementar animación aquí usando el canvas
-            console.log('Animar velocidad');
-        }
-        function animarAceleracion() {
-            // Implementar animación aquí usando el canvas
-            console.log('Animar aceleración');
-        }
-
-        // Vincular eventos al cargar la página
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('btnCalcularVelocidad').addEventListener('click', calcularVelocidadMedia);
-            document.getElementById('animarDesplazamiento').addEventListener('click', animarDesplazamiento);
-            document.getElementById('animarVelocidad').addEventListener('click', animarVelocidad);
-            document.getElementById('animarAceleracion').addEventListener('click', animarAceleracion);
-        });
-    </script>
-</body>
-</html>
+                            <op
