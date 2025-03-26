@@ -54,34 +54,63 @@
         
         nav ul {
             display: flex;
-            flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+            flex-wrap: wrap;
             justify-content: center;
             list-style: none;
             margin: 0;
             padding: 0;
             width: 100%;
+            max-width: 1000px;
         }
         
         nav li {
             margin: 5px;
             padding: 0;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
         }
         
         nav a {
             color: white;
             text-decoration: none;
-            padding: 0.8rem 1.2rem;
+            padding: 0.8rem 1rem;
             display: block;
             transition: all 0.3s;
-            border-radius: 25px; /* Botones redondeados */
+            border-radius: 8px;
             background-color: rgba(255,255,255,0.1);
             text-align: center;
+            width: 100%;
+            box-sizing: border-box;
         }
         
         nav a:hover {
             background-color: var(--primary-color);
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        /* Media query para navegación responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 10px;
+            }
+            
+            nav li {
+                margin: 5px 0;
+                width: 100%;
+                max-width: 300px;
+                min-width: 0;
+            }
+            
+            nav a {
+                padding: 1rem;
+                font-size: 1.1rem;
+                height: auto;
+            }
         }
         
         main {
@@ -122,7 +151,7 @@
         .calculator {
             background-color: #f5f5f5;
             padding: 1.2rem;
-            border-radius: 12px;
+            border-radius: 8px;
             margin: 1.5rem 0;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
@@ -136,7 +165,7 @@
             padding: 0.8rem;
             margin: 0.5rem 0;
             border: 1px solid #ddd;
-            border-radius: 8px;
+            border-radius: 6px;
             box-sizing: border-box;
             transition: all 0.3s;
             box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
@@ -153,7 +182,7 @@
             color: white;
             border: none;
             padding: 0.8rem 1.5rem;
-            border-radius: 25px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
             margin-top: 1rem;
@@ -174,7 +203,7 @@
             padding: 0.5rem;
             border: 1px solid #eee;
             background-color: white;
-            border-radius: 8px;
+            border-radius: 6px;
         }
         
         .canvas-container {
@@ -186,7 +215,7 @@
         
         canvas {
             border: 1px solid #ddd;
-            border-radius: 8px;
+            border-radius: 6px;
             background-color: white;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
@@ -203,14 +232,6 @@
                 gap: 1rem;
             }
             
-            nav ul {
-                flex-direction: row; /* Mantiene horizontal pero permite envolver */
-            }
-            
-            nav li {
-                width: calc(50% - 10px); /* Dos botones por fila en móviles */
-            }
-            
             header h1 {
                 font-size: 1.8rem;
             }
@@ -224,17 +245,15 @@
                 margin-bottom: 2rem;
             }
 
-            /* Ajustar tamaño de canvas en móviles */
             canvas {
                 width: 100%;
                 height: auto;
             }
 
-            /* Mejorar botones en móviles */
             button {
                 width: 100%;
                 padding: 12px;
-                border-radius: 25px;
+                border-radius: 8px;
                 font-weight: bold;
             }
 
@@ -243,10 +262,10 @@
             }
         }
         
-        /* Ajustes para tablets */
         @media (min-width: 769px) and (max-width: 1024px) {
             nav li {
-                margin: 5px 8px;
+                margin: 5px;
+                min-width: 130px;
             }
             
             .two-columns {
@@ -256,14 +275,6 @@
             section {
                 padding: 1.8rem;
             }
-        }
-        
-        footer {
-            background-color: var(--dark-color);
-            color: white;
-            text-align: center;
-            padding: 1.5rem 0;
-            margin-top: 2rem;
         }
         
         .tabs {
@@ -278,7 +289,7 @@
             cursor: pointer;
             border: 1px solid #ddd;
             border-bottom: none;
-            border-radius: 8px 8px 0 0;
+            border-radius: 6px 6px 0 0;
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
             transition: all 0.3s;
@@ -296,7 +307,7 @@
             display: none;
             padding: 1.5rem;
             border: 1px solid #ddd;
-            border-radius: 0 8px 8px 8px;
+            border-radius: 0 6px 6px 6px;
             background-color: white;
         }
         
@@ -307,7 +318,7 @@
         .animate-btn {
             background-color: var(--secondary-color);
             margin-right: 1rem;
-            border-radius: 25px;
+            border-radius: 8px;
         }
 
         footer a {
@@ -318,6 +329,38 @@
 
         footer a:hover {
             color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0.5rem auto;
+            max-width: 90%;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            footer {
+                padding: 1.2rem 0;
+            }
+            
+            footer p {
+                font-size: 0.9rem;
+                max-width: 95%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            footer p {
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
@@ -339,9 +382,7 @@
     <main>
         <section id="desplazamiento">
             <h2>Desplazamiento</h2>
-            
             <p>El <strong>desplazamiento</strong> es un vector que describe el cambio en la posición de un objeto. Es la distancia en línea recta desde el punto inicial hasta el punto final, junto con la dirección.</p>
-            
             <div class="formula">
                 <p>Δx = x<sub>f</sub> - x<sub>i</sub></p>
                 <p>Donde:</p>
@@ -351,22 +392,18 @@
                     <li>x<sub>i</sub> = Posición inicial</li>
                 </ul>
             </div>
-            
             <div class="canvas-container">
                 <canvas id="desplazamientoCanvas" width="600" height="200"></canvas>
             </div>
             <div style="text-align: center; margin-bottom: 1rem;">
                 <button id="animarDesplazamiento" class="animate-btn">Animar desplazamiento</button>
             </div>
-            
             <div class="calculator">
                 <h3>Calculadora de Desplazamiento</h3>
-                
                 <div class="tabs">
                     <div class="tab active" onclick="activateTab('desplazamiento1D', this)">1 Dimensión</div>
                     <div class="tab" onclick="activateTab('desplazamiento2D', this)">2 Dimensiones</div>
                 </div>
-                
                 <div id="desplazamiento1D" class="tab-content active">
                     <div>
                         <label for="posicionInicial">Posición inicial (m):</label>
@@ -379,7 +416,6 @@
                     <button onclick="calcularDesplazamiento1D()">Calcular</button>
                     <div id="resultado1D" class="result"></div>
                 </div>
-                
                 <div id="desplazamiento2D" class="tab-content">
                     <div>
                         <label for="posicionInicialX">Posición inicial X (m):</label>
@@ -405,9 +441,7 @@
         
         <section id="velocidad">
             <h2>Velocidad Media</h2>
-            
             <p>La <strong>velocidad media</strong> es la relación entre el desplazamiento total y el tiempo total transcurrido. Es un vector que indica qué tan rápido y en qué dirección se ha movido un objeto desde su posición inicial hasta su posición final.</p>
-            
             <div class="formula">
                 <p>v<sub>media</sub> = Δx / Δt</p>
                 <p>Donde:</p>
@@ -417,14 +451,12 @@
                     <li>Δt = Intervalo de tiempo</li>
                 </ul>
             </div>
-            
             <div class="canvas-container">
                 <canvas id="velocidadCanvas" width="600" height="200"></canvas>
             </div>
             <div style="text-align: center; margin-bottom: 1rem;">
                 <button id="animarVelocidad" class="animate-btn">Animar movimiento con velocidad constante</button>
             </div>
-            
             <div class="calculator">
                 <h3>Calculadora de Velocidad Media</h3>
                 <div>
@@ -435,16 +467,14 @@
                     <label for="tiempo">Tiempo (s):</label>
                     <input type="number" id="tiempo" placeholder="Ej: 20">
                 </div>
-                <button onclick="calcularVelocidad()">Calcular</button>
+                <button id="btnCalcularVelocidad">Calcular</button>
                 <div id="resultadoVelocidad" class="result"></div>
             </div>
         </section>
         
         <section id="aceleracion">
             <h2>Aceleración Media</h2>
-            
             <p>La <strong>aceleración media</strong> es la relación entre el cambio en la velocidad y el tiempo transcurrido. Describe qué tan rápido cambia la velocidad de un objeto, ya sea en magnitud o dirección.</p>
-            
             <div class="formula">
                 <p>a<sub>media</sub> = Δv / Δt</p>
                 <p>Donde:</p>
@@ -454,14 +484,12 @@
                     <li>Δt = Intervalo de tiempo</li>
                 </ul>
             </div>
-            
             <div class="canvas-container">
                 <canvas id="aceleracionCanvas" width="600" height="200"></canvas>
             </div>
             <div style="text-align: center; margin-bottom: 1rem;">
                 <button id="animarAceleracion" class="animate-btn">Animar movimiento acelerado</button>
             </div>
-            
             <div class="calculator">
                 <h3>Calculadora de Aceleración Media</h3>
                 <div>
@@ -483,9 +511,7 @@
         
         <section id="unidades">
             <h2>Conversión de Unidades</h2>
-            
             <p>En física, es común necesitar convertir entre diferentes unidades de medida. Aquí puedes convertir entre las unidades más comunes para velocidad y aceleración.</p>
-            
             <div class="two-columns">
                 <div class="calculator">
                     <h3>Conversión de Velocidad</h3>
@@ -514,7 +540,6 @@
                     <button onclick="convertirVelocidad()">Convertir</button>
                     <div id="resultadoConversionVelocidad" class="result"></div>
                 </div>
-                
                 <div class="calculator">
                     <h3>Conversión de Aceleración</h3>
                     <div>
@@ -527,7 +552,6 @@
                             <option value="m/s²">m/s²</option>
                             <option value="km/h²">km/h²</option>
                             <option value="ft/s²">ft/s²</option>
-                            <option value="g">g (9.8 m/s²)</option>
                         </select>
                     </div>
                     <div>
@@ -536,7 +560,6 @@
                             <option value="m/s²">m/s²</option>
                             <option value="km/h²">km/h²</option>
                             <option value="ft/s²">ft/s²</option>
-                            <option value="g">g (9.8 m/s²)</option>
                         </select>
                     </div>
                     <button onclick="convertirAceleracion()">Convertir</button>
@@ -547,517 +570,11 @@
     </main>
     
     <footer>
-        <p>Física Interactiva © 2024 | Desarrollado con ❤️ para estudiantes de física</p>
-        <p><a href="https://github.com/tuusuario/fisica-interactiva">Código fuente en GitHub</a></p>
+        <p>© 2023 Física Interactiva. Todos los derechos reservados.</p>
+        <p>Creado por [Tu Nombre] | <a href="https://github.com/tuusuario/tuproyecto" target="_blank">Ver en GitHub</a></p>
     </footer>
     
     <script>
-        // Funciones para las calculadoras
-        function calcularDesplazamiento1D() {
-            const posicionInicial = parseFloat(document.getElementById('posicionInicial').value);
-            const posicionFinal = parseFloat(document.getElementById('posicionFinal').value);
-            
-            if (isNaN(posicionInicial) || isNaN(posicionFinal)) {
-                document.getElementById('resultado1D').textContent = 'Por favor, ingresa valores numéricos válidos.';
-                return;
-            }
-            
-            const desplazamiento = posicionFinal - posicionInicial;
-            document.getElementById('resultado1D').textContent = `Desplazamiento: ${desplazamiento.toFixed(2)} m`;
-        }
-        
-        function calcularDesplazamiento2D() {
-            const posicionInicialX = parseFloat(document.getElementById('posicionInicialX').value);
-            const posicionInicialY = parseFloat(document.getElementById('posicionInicialY').value);
-            const posicionFinalX = parseFloat(document.getElementById('posicionFinalX').value);
-            const posicionFinalY = parseFloat(document.getElementById('posicionFinalY').value);
-            
-            if (isNaN(posicionInicialX) || isNaN(posicionInicialY) || isNaN(posicionFinalX) || isNaN(posicionFinalY)) {
-                document.getElementById('resultado2D').textContent = 'Por favor, ingresa valores numéricos válidos.';
-                return;
-            }
-            
-            const desplazamientoX = posicionFinalX - posicionInicialX;
-            const desplazamientoY = posicionFinalY - posicionInicialY;
-            const magnitud = Math.sqrt(desplazamientoX * desplazamientoX + desplazamientoY * desplazamientoY);
-            const angulo = Math.atan2(desplazamientoY, desplazamientoX) * (180 / Math.PI);
-            
-            document.getElementById('resultado2D').innerHTML = `
-                Desplazamiento en X: ${desplazamientoX.toFixed(2)} m<br>
-                Desplazamiento en Y: ${desplazamientoY.toFixed(2)} m<br>
-                Magnitud del desplazamiento: ${magnitud.toFixed(2)} m<br>
-                Ángulo: ${angulo.toFixed(2)}° (respecto al eje +X)
-            `;
-        }
-        
-        function calcularVelocidad() {
-            const desplazamiento = parseFloat(document.getElementById('desplazamiento').value);
-            const tiempo = parseFloat(document.getElementById('tiempo').value);
-            
-            if (isNaN(desplazamiento) || isNaN(tiempo)) {
-                document.getElementById('resultadoVelocidad').textContent = 'Por favor, ingresa valores numéricos válidos.';
-                return;
-            }
-            
-            if (tiempo === 0) {
-                document.getElementById('resultadoVelocidad').textContent = 'El tiempo no puede ser cero.';
-                return;
-            }
-            
-            const velocidad = desplazamiento / tiempo;
-            document.getElementById('resultadoVelocidad').textContent = `Velocidad media: ${velocidad.toFixed(2)} m/s (${(velocidad * 3.6).toFixed(2)} km/h)`;
-        }
-        
-        function calcularAceleracion() {
-            const velocidadInicial = parseFloat(document.getElementById('velocidadInicial').value);
-            const velocidadFinal = parseFloat(document.getElementById('velocidadFinal').value);
-            const tiempo = parseFloat(document.getElementById('tiempoAceleracion').value);
-            
-            if (isNaN(velocidadInicial) || isNaN(velocidadFinal) || isNaN(tiempo)) {
-                document.getElementById('resultadoAceleracion').textContent = 'Por favor, ingresa valores numéricos válidos.';
-                return;
-            }
-            
-            if (tiempo === 0) {
-                document.getElementById('resultadoAceleracion').textContent = 'El tiempo no puede ser cero.';
-                return;
-            }
-            
-            const aceleracion = (velocidadFinal - velocidadInicial) / tiempo;
-            document.getElementById('resultadoAceleracion').textContent = `Aceleración media: ${aceleracion.toFixed(2)} m/s²`;
-        }
-        
-        // Conversiones de unidades
-        function convertirVelocidad() {
-            const valor = parseFloat(document.getElementById('valorVelocidad').value);
-            const desde = document.getElementById('unidadDesde').value;
-            const hacia = document.getElementById('unidadHacia').value;
-            
-            if (isNaN(valor)) {
-                document.getElementById('resultadoConversionVelocidad').textContent = 'Por favor, ingresa un valor numérico válido.';
-                return;
-            }
-            
-            // Primero convertimos todo a m/s (unidad base)
-            let valorEnMS = 0;
-            
-            switch (desde) {
-                case 'm/s':
-                    valorEnMS = valor;
-                    break;
-                case 'km/h':
-                    valorEnMS = valor * (1000 / 3600); // km/h a m/s
-                    break;
-                case 'mi/h':
-                    valorEnMS = valor * 0.44704; // mph a m/s
-                    break;
-                case 'ft/s':
-                    valorEnMS = valor * 0.3048; // ft/s a m/s
-                    break;
-            }
-            
-            // Luego convertimos de m/s a la unidad deseada
-            let resultado = 0;
-            
-            switch (hacia) {
-                case 'm/s':
-                    resultado = valorEnMS;
-                    break;
-                case 'km/h':
-                    resultado = valorEnMS * (3600 / 1000); // m/s a km/h
-                    break;
-                case 'mi/h':
-                    resultado = valorEnMS / 0.44704; // m/s a mph
-                    break;
-                case 'ft/s':
-                    resultado = valorEnMS / 0.3048; // m/s a ft/s
-                    break;
-            }
-            
-            document.getElementById('resultadoConversionVelocidad').textContent = `${valor} ${desde} = ${resultado.toFixed(2)} ${hacia}`;
-        }
-        
-        function convertirAceleracion() {
-            const valor = parseFloat(document.getElementById('valorAceleracion').value);
-            const desde = document.getElementById('aceleracionDesde').value;
-            const hacia = document.getElementById('aceleracionHacia').value;
-            
-            if (isNaN(valor)) {
-                document.getElementById('resultadoConversionAceleracion').textContent = 'Por favor, ingresa un valor numérico válido.';
-                return;
-            }
-            
-            // Primero convertimos todo a m/s² (unidad base)
-            let valorEnMS2 = 0;
-            
-            switch (desde) {
-                case 'm/s²':
-                    valorEnMS2 = valor;
-                    break;
-                case 'km/h²':
-                    valorEnMS2 = valor * (1000 / 3600) * (1000 / 3600); // km/h² a m/s²
-                    break;
-                case 'ft/s²':
-                    valorEnMS2 = valor * 0.3048; // ft/s² a m/s²
-                    break;
-                case 'g':
-                    valorEnMS2 = valor * 9.8; // g a m/s²
-                    break;
-            }
-            
-            // Luego convertimos de m/s² a la unidad deseada
-            let resultado = 0;
-            
-            switch (hacia) {
-                case 'm/s²':
-                    resultado = valorEnMS2;
-                    break;
-                case 'km/h²':
-                    resultado = valorEnMS2 / ((1000 / 3600) * (1000 / 3600)); // m/s² a km/h²
-                    break;
-                case 'ft/s²':
-                    resultado = valorEnMS2 / 0.3048; // m/s² a ft/s²
-                    break;
-                case 'g':
-                    resultado = valorEnMS2 / 9.8; // m/s² a g
-                    break;
-            }
-            
-            document.getElementById('resultadoConversionAceleracion').textContent = `${valor} ${desde} = ${resultado.toFixed(4)} ${hacia}`;
-        }
-        
-        // Tabs
+        // Función para activar pestañas
         function activateTab(tabId, element) {
-            // Desactivar todas las pestañas
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Desactivar todos los contenidos
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            
-            // Activar la pestaña seleccionada
-            element.classList.add('active');
-            document.getElementById(tabId).classList.add('active');
-        }
-        
-        // Smooth scrolling para navegación
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                window.scrollTo({
-                    top: targetElement.offsetTop - 50,
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Animación para desplazamiento
-        const desplazamientoCanvas = document.getElementById('desplazamientoCanvas');
-        const dctx = desplazamientoCanvas.getContext('2d');
-        let desplazamientoAnimId;
-        let desplazamientoT = 0;
-        
-        function dibujarEscenaDesplazamiento() {
-            dctx.clearRect(0, 0, desplazamientoCanvas.width, desplazamientoCanvas.height);
-            
-            // Fondo
-            dctx.fillStyle = '#f0f0f0';
-            dctx.fillRect(0, 0, desplazamientoCanvas.width, desplazamientoCanvas.height);
-            
-            // Eje
-            dctx.strokeStyle = '#999';
-            dctx.beginPath();
-            dctx.moveTo(0, desplazamientoCanvas.height / 2);
-            dctx.lineTo(desplazamientoCanvas.width, desplazamientoCanvas.height / 2);
-            dctx.stroke();
-            
-            // Marcas en el eje
-            dctx.textAlign = 'center';
-            dctx.fillStyle = '#666';
-            for (let x = 50; x < desplazamientoCanvas.width; x += 50) {
-                dctx.beginPath();
-                dctx.moveTo(x, desplazamientoCanvas.height / 2 - 5);
-                dctx.lineTo(x, desplazamientoCanvas.height / 2 + 5);
-                dctx.stroke();
-                dctx.fillText(x/50 + ' u', x, desplazamientoCanvas.height / 2 + 20);
-            }
-            
-            // Posición inicial
-            const posInicial = 100;
-            dctx.fillStyle = '#3498db';
-            dctx.beginPath();
-            dctx.arc(posInicial, desplazamientoCanvas.height / 2, 8, 0, Math.PI * 2);
-            dctx.fill();
-            dctx.fillText('Posición inicial', posInicial, desplazamientoCanvas.height / 2 - 15);
-            
-            // Posición final
-            const posFinal = 450;
-            dctx.fillStyle = '#e74c3c';
-            dctx.beginPath();
-            dctx.arc(posFinal, desplazamientoCanvas.height / 2, 8, 0, Math.PI * 2);
-            dctx.fill();
-            dctx.fillText('Posición final', posFinal, desplazamientoCanvas.height / 2 - 15);
-            
-            // Vector de desplazamiento
-            dctx.strokeStyle = '#2c3e50';
-            dctx.lineWidth = 2;
-            dctx.beginPath();
-            dctx.moveTo(posInicial, desplazamientoCanvas.height / 2);
-            dctx.lineTo(posFinal, desplazamientoCanvas.height / 2);
-            dctx.stroke();
-            
-            // Flecha
-            dctx.beginPath();
-            dctx.moveTo(posFinal, desplazamientoCanvas.height / 2);
-            dctx.lineTo(posFinal - 10, desplazamientoCanvas.height / 2 - 5);
-            dctx.lineTo(posFinal - 10, desplazamientoCanvas.height / 2 + 5);
-            dctx.closePath();
-            dctx.fillStyle = '#2c3e50';
-            dctx.fill();
-            
-            // Etiqueta de desplazamiento
-            dctx.fillStyle = '#2c3e50';
-            dctx.fillText('Δx = ' + (posFinal - posInicial)/50 + ' u', (posInicial + posFinal) / 2, desplazamientoCanvas.height / 2 + 40);
-            
-            // Objeto móvil
-            if (desplazamientoAnimId) {
-                const posAnim = posInicial + (posFinal - posInicial) * desplazamientoT;
-                dctx.fillStyle = '#2ecc71';
-                dctx.beginPath();
-                dctx.arc(posAnim, desplazamientoCanvas.height / 2, 10, 0, Math.PI * 2);
-                dctx.fill();
-            }
-        }
-        
-        function animarDesplazamiento() {
-            if (desplazamientoAnimId) {
-                cancelAnimationFrame(desplazamientoAnimId);
-                desplazamientoAnimId = null;
-                desplazamientoT = 0;
-                dibujarEscenaDesplazamiento();
-                return;
-            }
-            
-            function frame() {
-                desplazamientoT += 0.01;
-                if (desplazamientoT > 1) {
-                    desplazamientoT = 0;
-                }
-                dibujarEscenaDesplazamiento();
-                desplazamientoAnimId = requestAnimationFrame(frame);
-            }
-            
-            desplazamientoAnimId = requestAnimationFrame(frame);
-        }
-        
-        document.getElementById('animarDesplazamiento').addEventListener('click', animarDesplazamiento);
-        
-        // Animación para velocidad
-        const velocidadCanvas = document.getElementById('velocidadCanvas');
-        const vctx = velocidadCanvas.getContext('2d');
-        let velocidadAnimId;
-        let velocidadT = 0;
-        
-        function dibujarEscenaVelocidad() {
-            vctx.clearRect(0, 0, velocidadCanvas.width, velocidadCanvas.height);
-            
-            // Fondo
-            vctx.fillStyle = '#f0f0f0';
-            vctx.fillRect(0, 0, velocidadCanvas.width, velocidadCanvas.height);
-            
-            // Eje
-            vctx.strokeStyle = '#999';
-            vctx.beginPath();
-            vctx.moveTo(0, velocidadCanvas.height / 2);
-            vctx.lineTo(velocidadCanvas.width, velocidadCanvas.height / 2);
-            vctx.stroke();
-            
-            // Marcas en el eje (tiempo)
-            vctx.textAlign = 'center';
-            vctx.fillStyle = '#666';
-            for (let x = 50; x < velocidadCanvas.width; x += 100) {
-                vctx.beginPath();
-                vctx.moveTo(x, velocidadCanvas.height / 2 - 5);
-                vctx.lineTo(x, velocidadCanvas.height / 2 + 5);
-                vctx.stroke();
-                vctx.fillText(x/100 + ' s', x, velocidadCanvas.height / 2 + 20);
-            }
-            
-            // Línea de posición vs tiempo (velocidad constante)
-            vctx.strokeStyle = '#3498db';
-            vctx.lineWidth = 2;
-            vctx.beginPath();
-            vctx.moveTo(50, 150);
-            vctx.lineTo(550, 50);
-            vctx.stroke();
-            
-            // Etiqueta de velocidad
-            vctx.fillStyle = '#3498db';
-            vctx.fillText('Velocidad = ' + ((150-50)/(550-50)*100).toFixed(1) + ' u/s', 300, 30);
-            
-            // Posición actual
-            if (velocidadAnimId) {
-                const x = 50 + (550 - 50) * velocidadT;
-                const y = 150 - (150 - 50) * velocidadT;
-                
-                // Objeto
-                vctx.fillStyle = '#2ecc71';
-                vctx.beginPath();
-                vctx.arc(x, y, 8, 0, Math.PI * 2);
-                vctx.fill();
-                
-                // Línea de tiempo
-                vctx.strokeStyle = '#999';
-                vctx.setLineDash([5, 3]);
-                vctx.beginPath();
-                vctx.moveTo(x, y);
-                vctx.lineTo(x, velocidadCanvas.height / 2);
-                vctx.stroke();
-                vctx.setLineDash([]);
-                
-                // Posición actual
-                vctx.fillStyle = '#333';
-                vctx.fillText('t = ' + (x/100).toFixed(1) + ' s', x, velocidadCanvas.height / 2 + 40);
-                vctx.fillText('x = ' + ((150-y)/100*50).toFixed(1) + ' u', x + 20, y - 10);
-            }
-        }
-        
-        function animarVelocidad() {
-            if (velocidadAnimId) {
-                cancelAnimationFrame(velocidadAnimId);
-                velocidadAnimId = null;
-                velocidadT = 0;
-                dibujarEscenaVelocidad();
-                return;
-            }
-            
-            function frame() {
-                velocidadT += 0.005;
-                if (velocidadT > 1) {
-                    velocidadT = 0;
-                }
-                dibujarEscenaVelocidad();
-                velocidadAnimId = requestAnimationFrame(frame);
-            }
-            
-            velocidadAnimId = requestAnimationFrame(frame);
-        }
-        
-        document.getElementById('animarVelocidad').addEventListener('click', animarVelocidad);
-        
-        // Animación para aceleración
-        const aceleracionCanvas = document.getElementById('aceleracionCanvas');
-        const actx = aceleracionCanvas.getContext('2d');
-        let aceleracionAnimId;
-        let aceleracionT = 0;
-        
-        function dibujarEscenaAceleracion() {
-            actx.clearRect(0, 0, aceleracionCanvas.width, aceleracionCanvas.height);
-            
-            // Fondo
-            actx.fillStyle = '#f0f0f0';
-            actx.fillRect(0, 0, aceleracionCanvas.width, aceleracionCanvas.height);
-            
-            // Eje
-            actx.strokeStyle = '#999';
-            actx.beginPath();
-            actx.moveTo(0, aceleracionCanvas.height / 2);
-            actx.lineTo(aceleracionCanvas.width, aceleracionCanvas.height / 2);
-            actx.stroke();
-            
-            // Marcas en el eje (tiempo)
-            actx.textAlign = 'center';
-            actx.fillStyle = '#666';
-            for (let x = 50; x < aceleracionCanvas.width; x += 100) {
-                actx.beginPath();
-                actx.moveTo(x, aceleracionCanvas.height / 2 - 5);
-                actx.lineTo(x, aceleracionCanvas.height / 2 + 5);
-                actx.stroke();
-                actx.fillText(x/100 + ' s', x, aceleracionCanvas.height / 2 + 20);
-            }
-            
-            // Curva de posición vs tiempo (aceleración constante)
-            actx.strokeStyle = '#e74c3c';
-            actx.lineWidth = 2;
-            actx.beginPath();
-            actx.moveTo(50, 150);
-            
-            for (let x = 50; x <= 550; x += 10) {
-                const t = (x - 50) / 500;
-                const y = 150 - 100 * t * t;
-                actx.lineTo(x, y);
-            }
-            
-            actx.stroke();
-            
-            // Etiqueta de aceleración
-            actx.fillStyle = '#e74c3c';
-            actx.fillText('Aceleración constante = 0.4 u/s²', 300, 30);
-            
-            // Posición actual
-            if (aceleracionAnimId) {
-                const x = 50 + (550 - 50) * aceleracionT;
-                const t = aceleracionT;
-                const y = 150 - 100 * t * t;
-                
-                // Objeto
-                actx.fillStyle = '#2ecc71';
-                actx.beginPath();
-                actx.arc(x, y, 8, 0, Math.PI * 2);
-                actx.fill();
-                
-                // Línea de tiempo
-                actx.strokeStyle = '#999';
-                actx.setLineDash([5, 3]);
-                actx.beginPath();
-                actx.moveTo(x, y);
-                actx.lineTo(x, aceleracionCanvas.height / 2);
-                actx.stroke();
-                actx.setLineDash([]);
-                
-                // Posición actual
-                actx.fillStyle = '#333';
-                actx.fillText('t = ' + (x/100).toFixed(1) + ' s', x, aceleracionCanvas.height / 2 + 40);
-                actx.fillText('x = ' + ((150-y)/100*50).toFixed(1) + ' u', x + 20, y - 10);
-            }
-        }
-        
-        function animarAceleracion() {
-            if (aceleracionAnimId) {
-                cancelAnimationFrame(aceleracionAnimId);
-                aceleracionAnimId = null;
-                aceleracionT = 0;
-                dibujarEscenaAceleracion();
-                return;
-            }
-            
-            function frame() {
-                aceleracionT += 0.005;
-                if (aceleracionT > 1) {
-                    aceleracionT = 0;
-                }
-                dibujarEscenaAceleracion();
-                aceleracionAnimId = requestAnimationFrame(frame);
-            }
-            
-            aceleracionAnimId = requestAnimationFrame(frame);
-        }
-        
-        document.getElementById('animarAceleracion').addEventListener('click', animarAceleracion);
-        
-        // Inicializar todas las escenas
-        window.addEventListener('load', function() {
-            dibujarEscenaDesplazamiento();
-            dibujarEscenaVelocidad();
-            dibujarEscenaAceleracion();
-        });
-    </script>
-</body>
-</html>
+            const tabs = document.querySelecto
