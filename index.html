@@ -266,14 +266,6 @@
             }
         }
         
-        footer {
-            background-color: var(--dark-color);
-            color: white;
-            text-align: center;
-            padding: 1.5rem 0;
-            margin-top: 2rem;
-        }
-        
         .tabs {
             display: flex;
             margin-bottom: 1rem;
@@ -327,69 +319,71 @@
         footer a:hover {
             color: var(--primary-color);
         }
+        
         /* Estilos responsive para el footer */
-footer {
-    background-color: var(--dark-color);
-    color: white;
-    text-align: center;
-    padding: 1.5rem 0;
-    margin-top: 2rem;
-    width: 100%;
-}
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+            width: 100%;
+        }
 
-footer p {
-    margin: 0.5rem auto;
-    max-width: 90%;
-    line-height: 1.5;
-}
+        footer p {
+            margin: 0.5rem auto;
+            max-width: 90%;
+            line-height: 1.5;
+        }
 
-@media (max-width: 768px) {
-    footer {
-        padding: 1.2rem 0;
-    }
-    
-    footer p {
-        font-size: 0.9rem;
-        max-width: 95%;
-    }
-}
+        @media (max-width: 768px) {
+            footer {
+                padding: 1.2rem 0;
+            }
+            
+            footer p {
+                font-size: 0.9rem;
+                max-width: 95%;
+            }
+        }
 
-@media (max-width: 480px) {
-    footer p {
-        font-size: 0.8rem;
-    }
-}
-/* Mejora para botones uniformes en móvil */
-@media (max-width: 768px) {
-    nav ul {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        padding: 10px;
-    }
-    
-    nav li {
-        margin: 0;
-        min-width: 0;
-        width: 100%;
-        flex: none;
-    }
-    
-    nav a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 60px;
-        width: 100%;
-        padding: 0 10px;
-        line-height: 1.2;
-        text-align: center;
-        white-space: normal;
-        word-wrap: break-word;
-        box-sizing: border-box;
-        font-size: 0.95rem;
-    }
-}
+        @media (max-width: 480px) {
+            footer p {
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Mejora para botones uniformes en móvil */
+        @media (max-width: 768px) {
+            nav ul {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+                padding: 10px;
+            }
+            
+            nav li {
+                margin: 0;
+                min-width: 0;
+                width: 100%;
+                flex: none;
+            }
+            
+            nav a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 60px;
+                width: 100%;
+                padding: 0 10px;
+                line-height: 1.2;
+                text-align: center;
+                white-space: normal;
+                word-wrap: break-word;
+                box-sizing: border-box;
+                font-size: 0.95rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -616,6 +610,7 @@ footer p {
             </div>
         </section>
     </main>
+    
     <footer>
         <p>Física Interactiva © 2025 | Profesor Javier Pereyra</p>
         <p>Hecho con ❤️ para los estudiantes de 4to año de Introducción a la Física</p>
@@ -661,21 +656,37 @@ footer p {
         }
         
         function calcularVelocidad() {
-            const desplazamiento = parseFloat(document.getElementById('desplazamiento').value);
-            const tiempo = parseFloat(document.getElementById('tiempo').value);
+            // Obtener los valores ingresados por el usuario
+            let desplazamientoVal = document.getElementById('desplazamiento').value;
+            let tiempoVal = document.getElementById('tiempo').value;
             
+            // Reemplazar comas por puntos (para manejar formatos regionales)
+            desplazamientoVal = desplazamientoVal.replace(',', '.');
+            tiempoVal = tiempoVal.replace(',', '.');
+            
+            // Convertir a números
+            const desplazamiento = parseFloat(desplazamientoVal);
+            const tiempo = parseFloat(tiempoVal);
+            
+            // Validar que ambos valores sean números válidos
             if (isNaN(desplazamiento) || isNaN(tiempo)) {
                 document.getElementById('resultadoVelocidad').textContent = 'Por favor, ingresa valores numéricos válidos.';
+                console.log("Valores inválidos:", desplazamientoVal, tiempoVal);
                 return;
             }
             
+            // Validar que el tiempo no sea cero
             if (tiempo === 0) {
                 document.getElementById('resultadoVelocidad').textContent = 'El tiempo no puede ser cero.';
                 return;
             }
             
+            // Calcular la velocidad
             const velocidad = desplazamiento / tiempo;
-            document.getElementById('resultadoVelocidad').textContent = `Velocidad media: ${velocidad.toFixed(2)} m/s (${(velocidad * 3.6).toFixed(2)} km/h)`;
+            
+            // Mostrar el resultado
+            document.getElementById('resultadoVelocidad').textContent = 
+                `Velocidad media: ${velocidad.toFixed(2)} m/s (${(velocidad * 3.6).toFixed(2)} km/h)`;
         }
         
         function calcularAceleracion() {
