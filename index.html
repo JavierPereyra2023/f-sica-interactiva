@@ -183,6 +183,50 @@
             border-radius: 6px;
         }
 
+        .tabs {
+            display: flex;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 0.8rem 1.2rem;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 6px 6px 0 0;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background-color: white;
+            font-weight: bold;
+            color: var(--primary-color);
+            border-bottom: 2px solid white;
+            margin-bottom: -1px;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 0 6px 6px 6px;
+            background-color: white;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
         footer {
             background-color: var(--dark-color);
             color: white;
@@ -256,6 +300,11 @@
                 margin-bottom: 2rem;
             }
 
+            .two-columns {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
             button {
                 width: 100%;
                 padding: 12px;
@@ -278,6 +327,10 @@
             section {
                 padding: 1.8rem;
             }
+
+            .two-columns {
+                gap: 1.5rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -290,28 +343,73 @@
 <body>
     <header>
         <h1>Física Interactiva: Movimiento</h1>
-        <p>Calcula la velocidad media de manera fácil y rápida</p>
+        <p>Aprende y calcula desplazamiento, velocidad media, aceleración y más</p>
     </header>
 
     <nav>
         <ul>
+            <li><a href="#desplazamiento">Desplazamiento</a></li>
             <li><a href="#velocidad">Velocidad Media</a></li>
-            <li><a href="#otros">Otros Cálculos</a></li>
+            <li><a href="#aceleracion">Aceleración Media</a></li>
+            <li><a href="#unidades">Conversión de Unidades</a></li>
         </ul>
     </nav>
 
     <main>
+        <section id="desplazamiento">
+            <h2>Desplazamiento</h2>
+            <p>El <strong>desplazamiento</strong> es un vector que describe el cambio en la posición de un objeto.</p>
+            <div class="formula">
+                <p>Δx = x<sub>f</sub> - x<sub>i</sub></p>
+                <p>Donde: Δx = Desplazamiento, x<sub>f</sub> = Posición final, x<sub>i</sub> = Posición inicial</p>
+            </div>
+            <div class="calculator">
+                <h3>Calculadora de Desplazamiento</h3>
+                <div class="tabs">
+                    <div class="tab active" onclick="activateTab('desplazamiento1D', this)">1 Dimensión</div>
+                    <div class="tab" onclick="activateTab('desplazamiento2D', this)">2 Dimensiones</div>
+                </div>
+                <div id="desplazamiento1D" class="tab-content active">
+                    <div>
+                        <label for="posicionInicial">Posición inicial (m):</label>
+                        <input type="number" id="posicionInicial" placeholder="Ej: 0">
+                    </div>
+                    <div>
+                        <label for="posicionFinal">Posición final (m):</label>
+                        <input type="number" id="posicionFinal" placeholder="Ej: 10">
+                    </div>
+                    <button onclick="calcularDesplazamiento1D()">Calcular</button>
+                    <div id="resultado1D" class="result"></div>
+                </div>
+                <div id="desplazamiento2D" class="tab-content">
+                    <div>
+                        <label for="posicionInicialX">Posición inicial X (m):</label>
+                        <input type="number" id="posicionInicialX" placeholder="Ej: 0">
+                    </div>
+                    <div>
+                        <label for="posicionInicialY">Posición inicial Y (m):</label>
+                        <input type="number" id="posicionInicialY" placeholder="Ej: 0">
+                    </div>
+                    <div>
+                        <label for="posicionFinalX">Posición final X (m):</label>
+                        <input type="number" id="posicionFinalX" placeholder="Ej: 3">
+                    </div>
+                    <div>
+                        <label for="posicionFinalY">Posición final Y (m):</label>
+                        <input type="number" id="posicionFinalY" placeholder="Ej: 4">
+                    </div>
+                    <button onclick="calcularDesplazamiento2D()">Calcular</button>
+                    <div id="resultado2D" class="result"></div>
+                </div>
+            </div>
+        </section>
+
         <section id="velocidad">
             <h2>Velocidad Media</h2>
-            <p>La <strong>velocidad media</strong> es la relación entre el desplazamiento total y el tiempo total transcurrido. Es un vector que indica qué tan rápido y en qué dirección se ha movido un objeto.</p>
+            <p>La <strong>velocidad media</strong> es la relación entre el desplazamiento total y el tiempo total transcurrido.</p>
             <div class="formula">
                 <p>v<sub>media</sub> = Δx / Δt</p>
-                <p>Donde:</p>
-                <ul>
-                    <li>v<sub>media</sub> = Velocidad media</li>
-                    <li>Δx = Desplazamiento</li>
-                    <li>Δt = Intervalo de tiempo</li>
-                </ul>
+                <p>Donde: v<sub>media</sub> = Velocidad media, Δx = Desplazamiento, Δt = Intervalo de tiempo</p>
             </div>
             <div class="calculator">
                 <h3>Calculadora de Velocidad Media</h3>
@@ -328,9 +426,89 @@
             </div>
         </section>
 
-        <section id="otros">
-            <h2>Otros Cálculos</h2>
-            <p>Este espacio está reservado para agregar más calculadoras o funcionalidades en el futuro.</p>
+        <section id="aceleracion">
+            <h2>Aceleración Media</h2>
+            <p>La <strong>aceleración media</strong> es la relación entre el cambio en la velocidad y el tiempo transcurrido.</p>
+            <div class="formula">
+                <p>a<sub>media</sub> = Δv / Δt</p>
+                <p>Donde: a<sub>media</sub> = Aceleración media, Δv = Cambio en la velocidad, Δt = Intervalo de tiempo</p>
+            </div>
+            <div class="calculator">
+                <h3>Calculadora de Aceleración Media</h3>
+                <div>
+                    <label for="velocidadInicial">Velocidad inicial (m/s):</label>
+                    <input type="number" id="velocidadInicial" placeholder="Ej: 0">
+                </div>
+                <div>
+                    <label for="velocidadFinal">Velocidad final (m/s):</label>
+                    <input type="number" id="velocidadFinal" placeholder="Ej: 10">
+                </div>
+                <div>
+                    <label for="tiempoAceleracion">Tiempo (s):</label>
+                    <input type="number" id="tiempoAceleracion" placeholder="Ej: 5">
+                </div>
+                <button onclick="calcularAceleracion()">Calcular</button>
+                <div id="resultadoAceleracion" class="result"></div>
+            </div>
+        </section>
+
+        <section id="unidades">
+            <h2>Conversión de Unidades</h2>
+            <p>Convierte entre diferentes unidades de medida para velocidad y aceleración.</p>
+            <div class="two-columns">
+                <div class="calculator">
+                    <h3>Conversión de Velocidad</h3>
+                    <div>
+                        <label for="valorVelocidad">Valor:</label>
+                        <input type="number" id="valorVelocidad" placeholder="Ej: 36">
+                    </div>
+                    <div>
+                        <label for="unidadDesde">Desde:</label>
+                        <select id="unidadDesde">
+                            <option value="km/h">km/h</option>
+                            <option value="m/s">m/s</option>
+                            <option value="mi/h">mi/h</option>
+                            <option value="ft/s">ft/s</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="unidadHacia">Hacia:</label>
+                        <select id="unidadHacia">
+                            <option value="m/s">m/s</option>
+                            <option value="km/h">km/h</option>
+                            <option value="mi/h">mi/h</option>
+                            <option value="ft/s">ft/s</option>
+                        </select>
+                    </div>
+                    <button onclick="convertirVelocidad()">Convertir</button>
+                    <div id="resultadoConversionVelocidad" class="result"></div>
+                </div>
+                <div class="calculator">
+                    <h3>Conversión de Aceleración</h3>
+                    <div>
+                        <label for="valorAceleracion">Valor:</label>
+                        <input type="number" id="valorAceleracion" placeholder="Ej: 9.8">
+                    </div>
+                    <div>
+                        <label for="aceleracionDesde">Desde:</label>
+                        <select id="aceleracionDesde">
+                            <option value="m/s²">m/s²</option>
+                            <option value="km/h²">km/h²</option>
+                            <option value="ft/s²">ft/s²</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="aceleracionHacia">Hacia:</label>
+                        <select id="aceleracionHacia">
+                            <option value="m/s²">m/s²</option>
+                            <option value="km/h²">km/h²</option>
+                            <option value="ft/s²">ft/s²</option>
+                        </select>
+                    </div>
+                    <button onclick="convertirAceleracion()">Convertir</button>
+                    <div id="resultadoConversionAceleracion" class="result"></div>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -340,23 +518,50 @@
     </footer>
 
     <script>
+        function activateTab(tabId, element) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            element.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function calcularDesplazamiento1D() {
+            const posicionInicial = parseFloat(document.getElementById('posicionInicial').value);
+            const posicionFinal = parseFloat(document.getElementById('posicionFinal').value);
+            const resultadoDiv = document.getElementById('resultado1D');
+            if (isNaN(posicionInicial) || isNaN(posicionFinal)) {
+                resultadoDiv.textContent = 'Por favor, ingresa valores numéricos válidos.';
+                return;
+            }
+            const desplazamiento = posicionFinal - posicionInicial;
+            resultadoDiv.textContent = `Desplazamiento: ${desplazamiento.toFixed(2)} m`;
+        }
+
+        function calcularDesplazamiento2D() {
+            const posInicialX = parseFloat(document.getElementById('posicionInicialX').value);
+            const posInicialY = parseFloat(document.getElementById('posicionInicialY').value);
+            const posFinalX = parseFloat(document.getElementById('posicionFinalX').value);
+            const posFinalY = parseFloat(document.getElementById('posicionFinalY').value);
+            const resultadoDiv = document.getElementById('resultado2D');
+            if (isNaN(posInicialX) || isNaN(posInicialY) || isNaN(posFinalX) || isNaN(posFinalY)) {
+                resultadoDiv.textContent = 'Por favor, ingresa valores numéricos válidos.';
+                return;
+            }
+            const desplazamientoX = posFinalX - posInicialX;
+            const desplazamientoY = posFinalY - posInicialY;
+            const magnitud = Math.sqrt(desplazamientoX ** 2 + desplazamientoY ** 2);
+            resultadoDiv.textContent = `Desplazamiento: (${desplazamientoX.toFixed(2)}, ${desplazamientoY.toFixed(2)}) m, Magnitud: ${magnitud.toFixed(2)} m`;
+        }
+
         function calcularVelocidadMedia() {
             const desplazamiento = parseFloat(document.getElementById('desplazamiento').value);
             const tiempo = parseFloat(document.getElementById('tiempo').value);
             const resultadoDiv = document.getElementById('resultadoVelocidad');
-
             if (isNaN(desplazamiento) || isNaN(tiempo)) {
                 resultadoDiv.textContent = 'Por favor, ingresa valores numéricos válidos.';
                 return;
             }
             if (tiempo === 0) {
-                resultadoDiv.textContent = 'El tiempo no puede ser cero.';
-                return;
-            }
-
-            const velocidadMedia = desplazamiento / tiempo;
-            resultadoDiv.textContent = `Velocidad media: ${velocidadMedia.toFixed(2)} m/s`;
-        }
-    </script>
-</body>
-</html>
+                resultadoDiv.textContent 
