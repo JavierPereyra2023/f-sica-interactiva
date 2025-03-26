@@ -378,7 +378,7 @@
                         <label for="posicionFinal">Posición final (m):</label>
                         <input type="number" id="posicionFinal" placeholder="Ej: 10">
                     </div>
-                    <button onclick="calcularDesplazamiento1D()">Calcular</button>
+                    <button id="btnCalcularDesplazamiento1D">Calcular</button>
                     <div id="resultado1D" class="result"></div>
                 </div>
                 <div id="desplazamiento2D" class="tab-content">
@@ -398,7 +398,7 @@
                         <label for="posicionFinalY">Posición final Y (m):</label>
                         <input type="number" id="posicionFinalY" placeholder="Ej: 4">
                     </div>
-                    <button onclick="calcularDesplazamiento2D()">Calcular</button>
+                    <button id="btnCalcularDesplazamiento2D">Calcular</button>
                     <div id="resultado2D" class="result"></div>
                 </div>
             </div>
@@ -421,7 +421,7 @@
                     <label for="tiempo">Tiempo (s):</label>
                     <input type="number" id="tiempo" placeholder="Ej: 20">
                 </div>
-                <button onclick="calcularVelocidadMedia()">Calcular</button>
+                <button id="btnCalcularVelocidad">Calcular</button>
                 <div id="resultadoVelocidad" class="result"></div>
             </div>
         </section>
@@ -447,7 +447,7 @@
                     <label for="tiempoAceleracion">Tiempo (s):</label>
                     <input type="number" id="tiempoAceleracion" placeholder="Ej: 5">
                 </div>
-                <button onclick="calcularAceleracion()">Calcular</button>
+                <button id="btnCalcularAceleracion">Calcular</button>
                 <div id="resultadoAceleracion" class="result"></div>
             </div>
         </section>
@@ -480,7 +480,7 @@
                             <option value="ft/s">ft/s</option>
                         </select>
                     </div>
-                    <button onclick="convertirVelocidad()">Convertir</button>
+                    <button id="btnConvertirVelocidad">Convertir</button>
                     <div id="resultadoConversionVelocidad" class="result"></div>
                 </div>
                 <div class="calculator">
@@ -505,7 +505,7 @@
                             <option value="ft/s²">ft/s²</option>
                         </select>
                     </div>
-                    <button onclick="convertirAceleracion()">Convertir</button>
+                    <button id="btnConvertirAceleracion">Convertir</button>
                     <div id="resultadoConversionAceleracion" class="result"></div>
                 </div>
             </div>
@@ -518,6 +518,7 @@
     </footer>
 
     <script>
+        // Función para activar pestañas
         function activateTab(tabId, element) {
             const tabs = document.querySelectorAll('.tab');
             const contents = document.querySelectorAll('.tab-content');
@@ -527,6 +528,7 @@
             document.getElementById(tabId).classList.add('active');
         }
 
+        // Calculadora de Desplazamiento 1D
         function calcularDesplazamiento1D() {
             const posicionInicial = parseFloat(document.getElementById('posicionInicial').value);
             const posicionFinal = parseFloat(document.getElementById('posicionFinal').value);
@@ -539,6 +541,7 @@
             resultadoDiv.textContent = `Desplazamiento: ${desplazamiento.toFixed(2)} m`;
         }
 
+        // Calculadora de Desplazamiento 2D
         function calcularDesplazamiento2D() {
             const posInicialX = parseFloat(document.getElementById('posicionInicialX').value);
             const posInicialY = parseFloat(document.getElementById('posicionInicialY').value);
@@ -555,13 +558,10 @@
             resultadoDiv.textContent = `Desplazamiento: (${desplazamientoX.toFixed(2)}, ${desplazamientoY.toFixed(2)}) m, Magnitud: ${magnitud.toFixed(2)} m`;
         }
 
+        // Calculadora de Velocidad Media
         function calcularVelocidadMedia() {
             const desplazamiento = parseFloat(document.getElementById('desplazamiento').value);
             const tiempo = parseFloat(document.getElementById('tiempo').value);
             const resultadoDiv = document.getElementById('resultadoVelocidad');
             if (isNaN(desplazamiento) || isNaN(tiempo)) {
-                resultadoDiv.textContent = 'Por favor, ingresa valores numéricos válidos.';
-                return;
-            }
-            if (tiempo === 0) {
-                resultadoDiv.textContent 
+                resultadoDiv.textContent = 'Por favor, ingres
