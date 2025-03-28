@@ -500,7 +500,7 @@
                     <label for="tiempo">Tiempo (s):</label>
                     <input type="number" id="tiempo" placeholder="Ej: 20">
                 </div>
-                <button onclick="calcularVelocidad()">Calcular</button>
+                <button id="btnCalcularVelocidad" onclick="calcularVelocidad()">Calcular</button>
                 <div id="resultadoVelocidad" class="result"></div>
             </div>
         </section>
@@ -590,4 +590,565 @@
                         <label for="aceleracionDesde">Desde:</label>
                         <select id="aceleracionDesde">
                             <option value="m/s²">m/s²</option>
-                            <op
+                            <option value="km/h²">km/h²</option>
+                            <option value="ft/s²">ft/s²</option>
+                            <option value="g">g (9.8 m/s²)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="aceleracionHacia">Hacia:</label>
+                        <select id="aceleracionHacia">
+                            <option value="m/s²">m/s²</option>
+                            <option value="km/h²">km/h²</option>
+                            <option value="ft/s²">ft/s²</option>
+                            <option value="g">g (9.8 m/s²)</option>
+                        </select>
+                    </div>
+                    <button onclick="convertirAceleracion()">Convertir</button>
+                    <div id="resultadoConversionAceleracion" class="result"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>Física Interactiva © 2025 | Profesor Javier Pereyra</p>
+        <p>Hecho con ❤️ para los estudiantes de 4to año de Introducción a la Física</p>
+    </footer>
+    
+    <script>
+        // Verificar elementos al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("DOM cargado, inicializando página");
+            
+            // Inicializar escenas de canvas
+            dibujarEscenaDesplazamiento();
+            dibujarEscenaVelocidad();
+            dibujarEscenaAceleracion();
+            
+            // Configurar botón de velocidad
+            document.getElementById('btnCalcularVelocidad').addEventListener('click', calcularVelocidad);
+        });
+    
+        // Funciones para las calculadoras
+        function calcularDesplazamiento1D() {
+            const posicionInicial = parseFloat(document.getElementById('posicionInicial').value);
+            const posicionFinal = parseFloat(document.getElementById('posicionFinal').value);
+            
+            if (isNaN(posicionInicial) || isNaN(posicionFinal)) {
+                document.getElementById('resultado1D').textContent = 'Por favor, ingresa valores numéricos válidos.';
+                return;
+            }
+            
+            const desplazamiento = posicionFinal - posicionInicial;
+            document.getElementById('resultado1D').textContent = `Desplazamiento: ${desplazamiento.toFixed(2)} m`;
+        }
+        
+        function calcularDesplazamiento2D() {
+            const posicionInicialX = parseFloat(document.getElementById('posicionInicialX').value);
+            const posicionInicialY = parseFloat(document.getElementById('posicionInicialY').value);
+            const posicionFinalX = parseFloat(document.getElementById('posicionFinalX').value);
+            const posicionFinalY = parseFloat(document.getElementById('posicionFinalY').value);
+            
+            if (isNaN(posicionInicialX) || isNaN(posicionInicialY) || isNaN(posicionFinalX) || isNaN(posicionFinalY)) {
+                document.getElementById('resultado2D').textContent = 'Por favor, ingresa valores numéricos válidos.';
+                return;
+            }
+            
+            const desplazamientoX = posicionFinalX - posicionInicialX;
+            const desplazamientoY = posicionFinalY - posicionInicialY;
+            const magnitud = Math.sqrt(desplazamientoX * desplazamientoX + desplazamientoY * desplazamientoY);
+            const angulo = Math.atan2(desplazamientoY, desplazamientoX) * (180 / Math.PI);
+            
+            document.getElementById('resultado2D').innerHTML = `
+                Desplazamiento en X: ${desplazamientoX.toFixed(2)} m<br>
+                Desplazamiento en Y: ${desplazamientoY.toFixed(2)} m<br>
+                Magnitud del desplazamiento: ${magnitud.toFixed(2)} m<br>
+                Ángulo: ${angulo.toFixed(2)}° (respecto al eje +X)
+            `;
+        }
+        
+        function calcularVelocidad() {
+            // Obtener referencias a los elementos
+            const inputDesplazamiento = document.getElementById('desplazamiento');
+            const inputTiempo = document.getElementById('tiempo');
+            const resultadoElement = document.getElementById('resultadoVelocidad');
+            
+            // Obtener los valores y limpiarlos
+            let desplazamientoVal = inputDesplazamiento.value.trim();
+            let tiempoVal = inputTiempo.value.trim();
+            
+            // Reemplazar comas por puntos (para manejar formatos regionales)
+            desplazamientoVal = desplazamientoVal.replace(',', '.');
+            tiempoVal = tiempoVal.replace(',', '.');
+            
+            // Convertir a números
+            const desplazamiento = parseFloat(desplazamientoVal);
+            const tiempo = parseFloat(tiempoVal);
+            
+            // Validar que ambos valores sean números válidos
+            if (isNaN(desplazamiento) || isNaN(tiempo)) {
+                resultadoElement.textContent = 'Por favor, ingresa valores numéricos válidos.';
+                return;
+            }
+            
+            // Validar que el tiempo no sea cero
+            if (tiempo === 0) {
+                resultadoElement.textContent = 'El tiempo no puede ser cero.';
+                return;
+            }
+            
+            // Calcular la velocidad
+            const velocidad = desplazamiento / tiempo;
+            
+            // Mostrar el resultado
+            resultadoElement.textContent = 
+                `Velocidad media: ${velocidad.toFixed(2)} m/s (${(velocidad * 3.6).toFixed(2)} km/h)`;
+        }
+        
+        function calcularAceleracion() {
+            const velocidadInicial = parseFloat(document.getElementById('velocidadInicial').value);
+            const velocidadFinal = parseFloat(document.getElementById('velocidadFinal').value);
+            const tiempo = parseFloat(document.getElementById('tiempoAceleracion').value);
+            
+            if (isNaN(velocidadInicial) || isNaN(velocidadFinal) || isNaN(tiempo)) {
+                document.getElementById('resultadoAceleracion').textContent = 'Por favor, ingresa valores numéricos válidos.';
+                return;
+            }
+            
+            if (tiempo === 0) {
+                document.getElementById('resultadoAceleracion').textContent = 'El tiempo no puede ser cero.';
+                return;
+            }
+            
+            const aceleracion = (velocidadFinal - velocidadInicial) / tiempo;
+            document.getElementById('resultadoAceleracion').textContent = `Aceleración media: ${aceleracion.toFixed(2)} m/s²`;
+        }
+        
+        // Conversiones de unidades
+        function convertirVelocidad() {
+            const valor = parseFloat(document.getElementById('valorVelocidad').value);
+            const desde = document.getElementById('unidadDesde').value;
+            const hacia = document.getElementById('unidadHacia').value;
+            
+            if (isNaN(valor)) {
+                document.getElementById('resultadoConversionVelocidad').textContent = 'Por favor, ingresa un valor numérico válido.';
+                return;
+            }
+            
+            // Primero convertimos todo a m/s (unidad base)
+            let valorEnMS = 0;
+            
+            switch (desde) {
+                case 'm/s':
+                    valorEnMS = valor;
+                    break;
+                case 'km/h':
+                    valorEnMS = valor * (1000 / 3600); // km/h a m/s
+                    break;
+                case 'mi/h':
+                    valorEnMS = valor * 0.44704; // mph a m/s
+                    break;
+                case 'ft/s':
+                    valorEnMS = valor * 0.3048; // ft/s a m/s
+                    break;
+            }
+            
+            // Luego convertimos de m/s a la unidad deseada
+            let resultado = 0;
+            
+            switch (hacia) {
+                case 'm/s':
+                    resultado = valorEnMS;
+                    break;
+                case 'km/h':
+                    resultado = valorEnMS * (3600 / 1000); // m/s a km/h
+                    break;
+                case 'mi/h':
+                    resultado = valorEnMS / 0.44704; // m/s a mph
+                    break;
+                case 'ft/s':
+                    resultado = valorEnMS / 0.3048; // m/s a ft/s
+                    break;
+            }
+            
+            document.getElementById('resultadoConversionVelocidad').textContent = `${valor} ${desde} = ${resultado.toFixed(2)} ${hacia}`;
+        }
+        
+        function convertirAceleracion() {
+            const valor = parseFloat(document.getElementById('valorAceleracion').value);
+            const desde = document.getElementById('aceleracionDesde').value;
+            const hacia = document.getElementById('aceleracionHacia').value;
+            
+            if (isNaN(valor)) {
+                document.getElementById('resultadoConversionAceleracion').textContent = 'Por favor, ingresa un valor numérico válido.';
+                return;
+            }
+            
+            // Primero convertimos todo a m/s² (unidad base)
+            let valorEnMS2 = 0;
+            
+            switch (desde) {
+                case 'm/s²':
+                    valorEnMS2 = valor;
+                    break;
+                case 'km/h²':
+                    valorEnMS2 = valor * (1000 / 3600) * (1000 / 3600); // km/h² a m/s²
+                    break;
+                case 'ft/s²':
+                    valorEnMS2 = valor * 0.3048; // ft/s² a m/s²
+                    break;
+                case 'g':
+                    valorEnMS2 = valor * 9.8; // g a m/s²
+                    break;
+            }
+            
+            // Luego convertimos de m/s² a la unidad deseada
+            let resultado = 0;
+            
+            switch (hacia) {
+                case 'm/s²':
+                    resultado = valorEnMS2;
+                    break;
+                case 'km/h²':
+                    resultado = valorEnMS2 / ((1000 / 3600) * (1000 / 3600)); // m/s² a km/h²
+                    break;
+                case 'ft/s²':
+                    resultado = valorEnMS2 / 0.3048; // m/s² a ft/s²
+                    break;
+                case 'g':
+                    resultado = valorEnMS2 / 9.8; // m/s² a g
+                    break;
+            }
+            
+            document.getElementById('resultadoConversionAceleracion').textContent = `${valor} ${desde} = ${resultado.toFixed(4)} ${hacia}`;
+        }
+        
+        // Tabs
+        function activateTab(tabId, element) {
+            // Desactivar todas las pestañas
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Desactivar todos los contenidos
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Activar la pestaña seleccionada
+            element.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+        
+        // Smooth scrolling para navegación
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 50,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animación para desplazamiento
+        const desplazamientoCanvas = document.getElementById('desplazamientoCanvas');
+        const dctx = desplazamientoCanvas.getContext('2d');
+        let desplazamientoAnimId;
+        let desplazamientoT = 0;
+        
+        function dibujarEscenaDesplazamiento() {
+            dctx.clearRect(0, 0, desplazamientoCanvas.width, desplazamientoCanvas.height);
+            
+            // Fondo
+            dctx.fillStyle = '#f0f0f0';
+            dctx.fillRect(0, 0, desplazamientoCanvas.width, desplazamientoCanvas.height);
+            
+            // Eje
+            dctx.strokeStyle = '#999';
+            dctx.beginPath();
+            dctx.moveTo(0, desplazamientoCanvas.height / 2);
+            dctx.lineTo(desplazamientoCanvas.width, desplazamientoCanvas.height / 2);
+            dctx.stroke();
+            
+            // Marcas en el eje
+            dctx.textAlign = 'center';
+            dctx.fillStyle = '#666';
+            for (let x = 50; x < desplazamientoCanvas.width; x += 50) {
+                dctx.beginPath();
+                dctx.moveTo(x, desplazamientoCanvas.height / 2 - 5);
+                dctx.lineTo(x, desplazamientoCanvas.height / 2 + 5);
+                dctx.stroke();
+                dctx.fillText(x/50 + ' u', x, desplazamientoCanvas.height / 2 + 20);
+            }
+            
+            // Posición inicial
+            const posInicial = 100;
+            dctx.fillStyle = '#3498db';
+            dctx.beginPath();
+            dctx.arc(posInicial, desplazamientoCanvas.height / 2, 8, 0, Math.PI * 2);
+            dctx.fill();
+            dctx.fillText('Posición inicial', posInicial, desplazamientoCanvas.height / 2 - 15);
+            
+            // Posición final
+            const posFinal = 450;
+            dctx.fillStyle = '#e74c3c';
+            dctx.beginPath();
+            dctx.arc(posFinal, desplazamientoCanvas.height / 2, 8, 0, Math.PI * 2);
+            dctx.fill();
+            dctx.fillText('Posición final', posFinal, desplazamientoCanvas.height / 2 - 15);
+            
+            // Vector de desplazamiento
+            dctx.strokeStyle = '#2c3e50';
+            dctx.lineWidth = 2;
+            dctx.beginPath();
+            dctx.moveTo(posInicial, desplazamientoCanvas.height / 2);
+            dctx.lineTo(posFinal, desplazamientoCanvas.height / 2);
+            dctx.stroke();
+            
+            // Flecha
+            dctx.beginPath();
+            dctx.moveTo(posFinal, desplazamientoCanvas.height / 2);
+            dctx.lineTo(posFinal - 10, desplazamientoCanvas.height / 2 - 5);
+            dctx.lineTo(posFinal - 10, desplazamientoCanvas.height / 2 + 5);
+            dctx.closePath();
+            dctx.fillStyle = '#2c3e50';
+            dctx.fill();
+            
+            // Etiqueta de desplazamiento
+            dctx.fillStyle = '#2c3e50';
+            dctx.fillText('Δx = ' + (posFinal - posInicial)/50 + ' u', (posInicial + posFinal) / 2, desplazamientoCanvas.height / 2 + 40);
+            
+            // Objeto móvil
+            if (desplazamientoAnimId) {
+                const posAnim = posInicial + (posFinal - posInicial) * desplazamientoT;
+                dctx.fillStyle = '#2ecc71';
+                dctx.beginPath();
+                dctx.arc(posAnim, desplazamientoCanvas.height / 2, 10, 0, Math.PI * 2);
+                dctx.fill();
+            }
+        }
+        
+        function animarDesplazamiento() {
+            if (desplazamientoAnimId) {
+                cancelAnimationFrame(desplazamientoAnimId);
+                desplazamientoAnimId = null;
+                desplazamientoT = 0;
+                dibujarEscenaDesplazamiento();
+                return;
+            }
+            
+            function frame() {
+                desplazamientoT += 0.01;
+                if (desplazamientoT > 1) {
+                    desplazamientoT = 0;
+                }
+                dibujarEscenaDesplazamiento();
+                desplazamientoAnimId = requestAnimationFrame(frame);
+            }
+            
+            desplazamientoAnimId = requestAnimationFrame(frame);
+        }
+        
+        document.getElementById('animarDesplazamiento').addEventListener('click', animarDesplazamiento);
+        
+        // Animación para velocidad
+        const velocidadCanvas = document.getElementById('velocidadCanvas');
+        const vctx = velocidadCanvas.getContext('2d');
+        let velocidadAnimId;
+        let velocidadT = 0;
+        
+        function dibujarEscenaVelocidad() {
+            vctx.clearRect(0, 0, velocidadCanvas.width, velocidadCanvas.height);
+            
+            // Fondo
+            vctx.fillStyle = '#f0f0f0';
+            vctx.fillRect(0, 0, velocidadCanvas.width, velocidadCanvas.height);
+            
+            // Eje
+            vctx.strokeStyle = '#999';
+            vctx.beginPath();
+            vctx.moveTo(0, velocidadCanvas.height / 2);
+            vctx.lineTo(velocidadCanvas.width, velocidadCanvas.height / 2);
+            vctx.stroke();
+            
+            // Marcas en el eje (tiempo)
+            vctx.textAlign = 'center';
+            vctx.fillStyle = '#666';
+            for (let x = 50; x < velocidadCanvas.width; x += 100) {
+                vctx.beginPath();
+                vctx.moveTo(x, velocidadCanvas.height / 2 - 5);
+                vctx.lineTo(x, velocidadCanvas.height / 2 + 5);
+                vctx.stroke();
+                vctx.fillText(x/100 + ' s', x, velocidadCanvas.height / 2 + 20);
+            }
+            
+            // Línea de posición vs tiempo (velocidad constante)
+            vctx.strokeStyle = '#3498db';
+            vctx.lineWidth = 2;
+            vctx.beginPath();
+            vctx.moveTo(50, 150);
+            vctx.lineTo(550, 50);
+            vctx.stroke();
+            
+            // Etiqueta de velocidad
+            vctx.fillStyle = '#3498db';
+            vctx.fillText('Velocidad = ' + ((150-50)/(550-50)*100).toFixed(1) + ' u/s', 300, 30);
+            
+            // Posición actual
+            if (velocidadAnimId) {
+                const x = 50 + (550 - 50) * velocidadT;
+                const y = 150 - (150 - 50) * velocidadT;
+                
+                // Objeto
+                vctx.fillStyle = '#2ecc71';
+                vctx.beginPath();
+                vctx.arc(x, y, 8, 0, Math.PI * 2);
+                vctx.fill();
+                
+                // Línea de tiempo
+                vctx.strokeStyle = '#999';
+                vctx.setLineDash([5, 3]);
+                vctx.beginPath();
+                vctx.moveTo(x, y);
+                vctx.lineTo(x, velocidadCanvas.height / 2);
+                vctx.stroke();
+                vctx.setLineDash([]);
+                
+                // Posición actual
+                vctx.fillStyle = '#333';
+                vctx.fillText('t = ' + (x/100).toFixed(1) + ' s', x, velocidadCanvas.height / 2 + 40);
+                vctx.fillText('x = ' + ((150-y)/100*50).toFixed(1) + ' u', x + 20, y - 10);
+            }
+        }
+        
+        function animarVelocidad() {
+            if (velocidadAnimId) {
+                cancelAnimationFrame(velocidadAnimId);
+                velocidadAnimId = null;
+                velocidadT = 0;
+                dibujarEscenaVelocidad();
+                return;
+            }
+            
+            function frame() {
+                velocidadT += 0.005;
+                if (velocidadT > 1) {
+                    velocidadT = 0;
+                }
+                dibujarEscenaVelocidad();
+                velocidadAnimId = requestAnimationFrame(frame);
+            }
+            
+            velocidadAnimId = requestAnimationFrame(frame);
+        }
+        
+        document.getElementById('animarVelocidad').addEventListener('click', animarVelocidad);
+        
+        // Animación para aceleración
+        const aceleracionCanvas = document.getElementById('aceleracionCanvas');
+        const actx = aceleracionCanvas.getContext('2d');
+        let aceleracionAnimId;
+        let aceleracionT = 0;
+        
+        function dibujarEscenaAceleracion() {
+            actx.clearRect(0, 0, aceleracionCanvas.width, aceleracionCanvas.height);
+            
+            // Fondo
+            actx.fillStyle = '#f0f0f0';
+            actx.fillRect(0, 0, aceleracionCanvas.width, aceleracionCanvas.height);
+            
+            // Eje
+            actx.strokeStyle = '#999';
+            actx.beginPath();
+            actx.moveTo(0, aceleracionCanvas.height / 2);
+            actx.lineTo(aceleracionCanvas.width, aceleracionCanvas.height / 2);
+            actx.stroke();
+            
+            // Marcas en el eje (tiempo)
+            actx.textAlign = 'center';
+            actx.fillStyle = '#666';
+            for (let x = 50; x < aceleracionCanvas.width; x += 100) {
+                actx.beginPath();
+                actx.moveTo(x, aceleracionCanvas.height / 2 - 5);
+                actx.lineTo(x, aceleracionCanvas.height / 2 + 5);
+                actx.stroke();
+                actx.fillText(x/100 + ' s', x, aceleracionCanvas.height / 2 + 20);
+            }
+            
+            // Curva de posición vs tiempo (aceleración constante)
+            actx.strokeStyle = '#e74c3c';
+            actx.lineWidth = 2;
+            actx.beginPath();
+            actx.moveTo(50, 150);
+            
+            for (let x = 50; x <= 550; x += 10) {
+                const t = (x - 50) / 500;
+                const y = 150 - 100 * t * t;
+                actx.lineTo(x, y);
+            }
+            
+            actx.stroke();
+            
+            // Etiqueta de aceleración
+            actx.fillStyle = '#e74c3c';
+            actx.fillText('Aceleración constante = 0.4 u/s²', 300, 30);
+            
+            // Posición actual
+            if (aceleracionAnimId) {
+                const x = 50 + (550 - 50) * aceleracionT;
+                const t = aceleracionT;
+                const y = 150 - 100 * t * t;
+                
+                // Objeto
+                actx.fillStyle = '#2ecc71';
+                actx.beginPath();
+                actx.arc(x, y, 8, 0, Math.PI * 2);
+                actx.fill();
+                
+                // Línea de tiempo
+                actx.strokeStyle = '#999';
+                actx.setLineDash([5, 3]);
+                actx.beginPath();
+                actx.moveTo(x, y);
+                actx.lineTo(x, aceleracionCanvas.height / 2);
+                actx.stroke();
+                actx.setLineDash([]);
+                
+                // Posición actual
+                actx.fillStyle = '#333';
+                actx.fillText('t = ' + (x/100).toFixed(1) + ' s', x, aceleracionCanvas.height / 2 + 40);
+                actx.fillText('x = ' + ((150-y)/100*50).toFixed(1) + ' u', x + 20, y - 10);
+            }
+        }
+        
+        function animarAceleracion() {
+            if (aceleracionAnimId) {
+                cancelAnimationFrame(aceleracionAnimId);
+                aceleracionAnimId = null;
+                aceleracionT = 0;
+                dibujarEscenaAceleracion();
+                return;
+            }
+            
+            function frame() {
+                aceleracionT += 0.005;
+                if (aceleracionT > 1) {
+                    aceleracionT = 0;
+                }
+                dibujarEscenaAceleracion();
+                aceleracionAnimId = requestAnimationFrame(frame);
+            }
+            
+            aceleracionAnimId = requestAnimationFrame(frame);
+        }
+        
+        document.getElementById('animarAceleracion').addEventListener('click', animarAceleracion);
+    </script>
+</body>
+</html>
