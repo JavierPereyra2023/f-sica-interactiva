@@ -668,42 +668,21 @@
             `;
         }
         
+        // Reemplazá la función calcularVelocidad() actual con esta:
         function calcularVelocidad() {
-            // Obtener referencias a los elementos
-            const inputDesplazamiento = document.getElementById('desplazamiento');
-            const inputTiempo = document.getElementById('tiempo');
-            const resultadoElement = document.getElementById('resultadoVelocidad');
-            
-            // Obtener los valores y limpiarlos
-            let desplazamientoVal = inputDesplazamiento.value.trim();
-            let tiempoVal = inputTiempo.value.trim();
-            
-            // Reemplazar comas por puntos (para manejar formatos regionales)
-            desplazamientoVal = desplazamientoVal.replace(',', '.');
-            tiempoVal = tiempoVal.replace(',', '.');
-            
-            // Convertir a números
-            const desplazamiento = parseFloat(desplazamientoVal);
-            const tiempo = parseFloat(tiempoVal);
-            
-            // Validar que ambos valores sean números válidos
+            const desplazamiento = parseFloat(document.querySelector('#velocidad input#desplazamiento').value);
+            const tiempo = parseFloat(document.querySelector('#velocidad input#tiempo').value);
+            const resultado = document.getElementById('resultadoVelocidad');
             if (isNaN(desplazamiento) || isNaN(tiempo)) {
-                resultadoElement.textContent = 'Por favor, ingresa valores numéricos válidos.';
+                resultado.textContent = 'Por favor, ingresa valores numéricos válidos.';
                 return;
             }
-            
-            // Validar que el tiempo no sea cero
             if (tiempo === 0) {
-                resultadoElement.textContent = 'El tiempo no puede ser cero.';
+                resultado.textContent = 'El tiempo no puede ser cero.';
                 return;
             }
-            
-            // Calcular la velocidad
             const velocidad = desplazamiento / tiempo;
-            
-            // Mostrar el resultado
-            resultadoElement.textContent = 
-                `Velocidad media: ${velocidad.toFixed(2)} m/s (${(velocidad * 3.6).toFixed(2)} km/h)`;
+            resultado.textContent = `Velocidad media: ${velocidad.toFixed(2)} m/s (${(velocidad * 3.6).toFixed(2)} km/h)`;
         }
         
         function calcularAceleracion() {
